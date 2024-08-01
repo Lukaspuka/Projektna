@@ -17,9 +17,27 @@ def bloki_podatkov(html):
 print(len(bloki_podatkov(prenesi_html("https://myanimelist.net/topanime.php"))))
 
 def izlusci_iz_bloka(blok):
-    vzorec = re.compile(r'class="hoverinfo_trigger">(?P<ime>.*?)</a>.*?'
-                        r'', re.DOTALL)
+    vzorec = re.compile(
+        r'class="hoverinfo_trigger">(?P<ime>.*?)</a>.*?'
+        r'<div class="information di-ib mt4">.*?'
+        r'(?P<zvrst_in_število_epizod>.*?)<br>.*?'
+        r'(?P<čas_nastajanja>.*?)<br>.*?'
+        r'(?P<število_uporabnikov>\d{1,3}(?:,\d{3})*) members.*?',
+        re.DOTALL
+    )
     najdba = vzorec.search(blok)
-    slovar = {}
-    slovar["ime"] = najdba["ime"]
+    if najdba:
+        slovar = {
+            "ime": najdba.group("ime").strip(),
+            "zvrst_in_število_epizod": najdba.group("zvrst_in_število_epizod").strip(),
+            "čas_nastajanja": najdba.group("čas_nastajanja").strip(),
+            "število_uporabnikov": najdba.group("število_uporabnikov").strip()
+        }
+    else:
+        slovar = {
+            "ime": "N/A",
+            "zvrst_in_število_epizod": "N/A",
+            "čas_nastajanja": "N/A",
+            "število_uporabnikov": "N/A"
+        }
     return slovar
