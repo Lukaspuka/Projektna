@@ -2,11 +2,11 @@ import re
 import requests as req
 import csv
 
-def prenesi_html(url):
-    html = req.get(url)
-    # with open("html_datoteka", "w", encoding="utf-8") as dat:
-    #     print(html.text, file=dat)
-    return html.text
+def prenesi_html(stran):
+    url = f"https://myanimelist.net/topanime.php?limit={stran * 50}"
+    odgovor = req.get(url)
+    odgovor.raise_for_status()
+    return odgovor.text
 
 # prenesi_html("https://myanimelist.net/topanime.php")
 
@@ -41,3 +41,11 @@ def izlusci_iz_bloka(blok):
             "število_uporabnikov": "N/A"
         }
     return slovar
+
+def zbiraj_podatke(stevilo_strani):
+    vsi_bloki = []
+    for i in range(stevilo_strani):
+        html = prenesi_html(i)
+        bloki = bloki_podatkov(html)
+        vsi_bloki.extend(bloki)
+    return vsi_bloki
