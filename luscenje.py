@@ -22,7 +22,8 @@ def izlusci_iz_bloka(blok):
         r'<div class="information di-ib mt4">.*?'
         r'(?P<zvrst_in_število_epizod>.*?)<br>.*?'
         r'(?P<čas_nastajanja>.*?)<br>.*?'
-        r'(?P<število_uporabnikov>\d{1,3}(?:,\d{3})*) members.*?',
+        r'(?P<število_uporabnikov>\d{1,3}(?:,\d{3})*) members.*?'
+        r'<span class="text on score-label score-\d+">(?P<ocena>\d+\.\d+)</span>',
         re.DOTALL
     )
     najdba = vzorec.search(blok)
@@ -31,14 +32,16 @@ def izlusci_iz_bloka(blok):
             "ime": najdba.group("ime").strip(),
             "zvrst_in_število_epizod": najdba.group("zvrst_in_število_epizod").strip(),
             "čas_nastajanja": najdba.group("čas_nastajanja").strip(),
-            "število_uporabnikov": najdba.group("število_uporabnikov").strip()
+            "število_uporabnikov": najdba.group("število_uporabnikov").strip(),
+            "ocena": najdba.group("ocena").strip()
         }
     else:
         slovar = {
             "ime": "N/A",
             "zvrst_in_število_epizod": "N/A",
             "čas_nastajanja": "N/A",
-            "število_uporabnikov": "N/A"
+            "število_uporabnikov": "N/A",
+            "ocena": "N/A"
         }
     return slovar
 
