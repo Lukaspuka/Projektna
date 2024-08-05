@@ -6,15 +6,15 @@ def prenesi_html(stran):
     url = f"https://myanimelist.net/topanime.php?limit={stran * 50}"
     odgovor = req.get(url)
     odgovor.raise_for_status()
+    with open("html_datoteka", "w", encoding="utf-8") as dat:
+        dat.write(odgovor.text)
     return odgovor.text
 
-# prenesi_html("https://myanimelist.net/topanime.php")
 
 def bloki_podatkov(html):
     vzorec = r'<div class="di-ib clearfix"><h3 class="fl-l fs14 fw-b anime_ranking_h3">.*?Add to My List</a></td>'
     return re.findall(vzorec, html, flags=re.DOTALL)
 
-print(len(bloki_podatkov(prenesi_html("https://myanimelist.net/topanime.php"))))
 
 def izlusci_iz_bloka(blok):
     vzorec = re.compile(
@@ -52,3 +52,5 @@ def zbiraj_podatke(stevilo_strani):
         bloki = bloki_podatkov(html)
         vsi_bloki.extend(bloki)
     return vsi_bloki
+
+zbiraj_podatke(20)

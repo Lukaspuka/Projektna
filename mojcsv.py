@@ -9,3 +9,5 @@ def naredi_csv(ime_csv_datoteke, stevilo_strani):
         for blok in bloki:
             slovar = izlusci_iz_bloka(blok)
             pisatelj.writerow([slovar["ime"], slovar["zvrst_in_število_epizod"], slovar["čas_nastajanja"], slovar["število_uporabnikov"], slovar["ocena"]])
+
+naredi_csv("ime_csv_datoteke.csv", stevilo_strani=20)
