@@ -45,6 +45,7 @@ def izlusci_iz_bloka(blok):
         }
     return slovar
 
+
 def zbiraj_podatke(stevilo_strani):
     vsi_bloki = []
     for i in range(stevilo_strani):
@@ -52,5 +53,3 @@ def zbiraj_podatke(stevilo_strani):
         bloki = bloki_podatkov(html)
         vsi_bloki.extend(bloki)
     return vsi_bloki
-
-zbiraj_podatke(20)
